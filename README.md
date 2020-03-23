@@ -6,7 +6,7 @@ _Quick, easy, confident configuration_
     <img alt="Cover" src="cover.jpg">
 </center>
 
-For developers who need to configure Hazelcast, the (Kotlin) DSL is an alternative to the previous configuration methods that is covers the full API, is type-safe, and provides autocompletion. Unlike the existing configuration methods, the DSL scales well since it provides both declarative and programmatic configuration.
+For developers who need to configure Hazelcast, the (Kotlin) DSL is an alternative to the previous configuration methods that covers the full API, is type-safe, and provides autocomplete. Unlike the existing configuration methods, the DSL scales well since it provides both declarative and programmatic configuration.
 
 This demo of what Hazelcast's Kotlin DSL for configuration management could look like is shown below.
 
