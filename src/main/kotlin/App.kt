@@ -9,7 +9,8 @@ fun main() {
             clusterName("my-cluster")
             network {
                 port(5701, portCount = 105)
-                interfaces("10.10.1.*", "10.10.2.*", isEnabled = false)
+                if (true) // Example of conditional configuration.
+                    interfaces("10.10.1.*", "10.10.2.*", isEnabled = false)
             }
         }
     )
