@@ -1,46 +1,39 @@
 package com.neelkamath.hazelcast_config
 
 import com.hazelcast.config.Config
+import com.hazelcast.config.MapConfig
 import com.hazelcast.config.NetworkConfig
 
 fun main() {
     println(
-        hazelcast {
-            clusterName("my-cluster")
-            network {
-                port(5701, portCount = 105)
-                if (true) // Example of conditional configuration.
-                    interfaces("10.10.1.*", "10.10.2.*", isEnabled = false)
-            }
+        config {
+            clusterName = "my-cluster"
+        }
+    )
+    println()
+    println(
+        networkConfig {
+            port = 500
+            portAutoIncrement = false
+        }
+    )
+    println()
+    println(
+        mapConfig("testMap") {
+            backupCount = 2
+            timeToLiveSeconds = 300
         }
     )
 }
 
-fun hazelcast(init: Hazelcast.() -> Unit) = Hazelcast().apply(init).config
+fun config(name: String? = null, init: Config.() -> Unit) = Config(name).apply(init)
 
-class Hazelcast {
-    val config = Config()
+fun networkConfig(init: NetworkConfig.() -> Unit) = NetworkConfig().apply(init)
 
-    fun clusterName(name: String) {
-        config.clusterName = name
+var NetworkConfig.portAutoIncrement: Boolean
+    get() = isPortAutoIncrement
+    set(value) {
+        isPortAutoIncrement = value
     }
 
-    fun network(init: Network.() -> Unit) {
-        config.networkConfig = Network(config).apply(init).networkConfig
-    }
-}
-
-class Network(config: Config) {
-    val networkConfig: NetworkConfig = config.networkConfig
-
-    fun port(port: Int = 5701, isPortAutoIncrement: Boolean = true, portCount: Int = 100) {
-        networkConfig.port = port
-        networkConfig.isPortAutoIncrement = isPortAutoIncrement
-        networkConfig.portCount = portCount
-    }
-
-    fun interfaces(vararg interfaces: String = arrayOf("10.10.1.*"), isEnabled: Boolean = true) {
-        networkConfig.interfaces.isEnabled = isEnabled
-        networkConfig.interfaces.interfaces = interfaces.toList()
-    }
-}
+fun mapConfig(name: String? = null, init: MapConfig.() -> Unit) = MapConfig(name).apply(init)
